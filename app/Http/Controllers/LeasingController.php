@@ -8,6 +8,6 @@ class LeasingController extends Controller
 {
     public function index()
     {
-        return view('pages.laesing');
+        return view('pages.leasing');
     }
 }

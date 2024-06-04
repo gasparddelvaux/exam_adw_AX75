@@ -3,27 +3,27 @@
 @section('title', 'Contact')
 
 @section('content')
-<div class="flex flex-col lg:flex-row items-center justify-center w-full h-full py-10 p-3 lg:ml-20 justify-around">
+<div class="flex flex-col lg:flex-row items-center w-full h-full py-10 p-3 lg:ml-20 justify-around">
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
     @endif
 
     @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
     @endif
 
     <div class="lg:w-2/5 w-full">
@@ -31,12 +31,8 @@
     </div>
     <div class="lg:w-2/5 w-full ">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white pb-5">Envoyez-nous un message</h1>
-        <form id="contact-form" action="{{ route('store.contact') }}" method="GET" class="flex flex-col w-full">
+        <form id="contact-form" action="{{ route('contact.store') }}" method="POST" class="flex flex-col w-full">
             @csrf
-            {{-- {!! NoCaptcha::renderJs() !!} --}}
-                {!! RecaptchaV3::field('contact') !!}
-
-            {{-- <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" value=""> --}}
             <div class="mb-5">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
                 <input name="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" placeholder="Entrez votre nom" required>
@@ -65,12 +61,4 @@
         </form>
     </div>
 </div>
-<script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptchav3.api_site_key') }}"></script>
-<script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('{{ config('recaptchav3.api_site_key') }}', {action: 'contact'}).then(function(token) {
-            document.getElementById('g-recaptcha-response').value = token;
-        });
-    });
-</script>
 @stop
